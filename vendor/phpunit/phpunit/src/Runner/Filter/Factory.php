@@ -12,23 +12,20 @@ namespace PHPUnit\Runner\Filter;
 use function assert;
 use FilterIterator;
 use Iterator;
-use PHPUnit\Framework\Test;
 use PHPUnit\Framework\TestSuite;
 
 /**
- * @no-named-arguments Parameter names are not covered by the backward compatibility promise for PHPUnit
- *
  * @internal This class is not covered by the backward compatibility promise for PHPUnit
  */
 final class Factory
 {
     /**
-     * @var list<array{className: class-string<FilterIterator<int, Test, Iterator<int, Test>>>, argument: list<non-empty-string>|non-empty-string}>
+     * @psalm-var list<array{className: class-string, argument: array|string}>
      */
     private array $filters = [];
 
     /**
-     * @param list<non-empty-string> $testIds
+     * @psalm-param list<non-empty-string> $testIds
      */
     public function addTestIdFilter(array $testIds): void
     {
@@ -39,7 +36,7 @@ final class Factory
     }
 
     /**
-     * @param list<non-empty-string> $groups
+     * @psalm-param list<non-empty-string> $groups
      */
     public function addIncludeGroupFilter(array $groups): void
     {
@@ -50,7 +47,7 @@ final class Factory
     }
 
     /**
-     * @param list<non-empty-string> $groups
+     * @psalm-param list<non-empty-string> $groups
      */
     public function addExcludeGroupFilter(array $groups): void
     {
@@ -61,7 +58,7 @@ final class Factory
     }
 
     /**
-     * @param non-empty-string $name
+     * @psalm-param non-empty-string $name
      */
     public function addIncludeNameFilter(string $name): void
     {
@@ -72,7 +69,7 @@ final class Factory
     }
 
     /**
-     * @param non-empty-string $name
+     * @psalm-param non-empty-string $name
      */
     public function addExcludeNameFilter(string $name): void
     {
@@ -82,11 +79,6 @@ final class Factory
         ];
     }
 
-    /**
-     * @param Iterator<int, Test> $iterator
-     *
-     * @return FilterIterator<int, Test, Iterator<int, Test>>
-     */
     public function factory(Iterator $iterator, TestSuite $suite): FilterIterator
     {
         foreach ($this->filters as $filter) {
